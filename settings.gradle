@@ -1,0 +1,2 @@
+// Set the name of the output JAR
+rootProject.name = 'openssl-checker'

@@ -6,6 +6,11 @@ import org.gradle.api.DomainObjectCollection
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
+/**
+ * Gradle plugin that provides a check for insecure OpenSSL versions in an APK or AAR.
+ *
+ * Generates a check[variantName]OpenSsl task for each variant of your application or library
+ */
 class OpenSslCheckerPlugin implements Plugin<Project> {
     void apply(Project project) {
 
@@ -32,7 +37,7 @@ class OpenSslCheckerPlugin implements Plugin<Project> {
     private static void applyToVariantOutput(Project project, BaseVariant variant, BaseVariantOutput output) {
         def slug = variant.name.capitalize()
 
-        def task = project.tasks.create("check${slug}OpenSSL", OpenSslCheckTask)
+        def task = project.tasks.create("check${slug}OpenSsl", OpenSslCheckTask)
         task.description = "Checks for OpenSSL vulnerabilities in ${variant.name}."
         task.group = 'Verification'
         task.androidOutput = output

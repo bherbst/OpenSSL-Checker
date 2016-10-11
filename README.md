@@ -13,7 +13,7 @@ In your project's root `build.gradle`:
 ```groovy
 buildscript {
     repositories {
-        jCenter()
+        // jCenter() or mavenCentral()
     }
 
     dependencies {
@@ -29,7 +29,7 @@ apply plugin: 'android'
 apply plugin: 'com.bryanherbst.openssl-checker'
 ```
 
-Then run `./gradlew check[variantName]OpenSSL`. For example, `./gradlew checkDebugOpenSSL`.
+Then run `./gradlew check[variantName]OpenSSL`. For example, `./gradlew checkDebugOpenSsl`.
 This task will fail if a vulnerable version is found.
 
 *Note:* This plugin currently only works on Unix machines, as it runs a shell
@@ -40,7 +40,7 @@ Windows are welcome!
 ```
 Found OpenSSL version 1.0.0m in:
         - /Users/username/bad-library
-:app:checkDebugOpenSSL FAILED
+:app:checkDebugOpenSsl FAILED
 
 FAILURE: Build failed with an exception.
 

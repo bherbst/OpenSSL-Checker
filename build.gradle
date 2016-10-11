@@ -66,4 +66,4 @@ artifacts {
     archives sourcesJar
 }
 
-//apply from: file('gradle/gradle-mvn-push.gradle')
+apply from: file('gradle/gradle-mvn-push.gradle')

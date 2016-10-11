@@ -6,7 +6,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.TaskExecutionException
 
 /**
- * The task that actually checks a file for
+ * The task that checks a file for vulnerable OpenSSL versions
  */
 class OpenSslCheckTask extends DefaultTask {
 

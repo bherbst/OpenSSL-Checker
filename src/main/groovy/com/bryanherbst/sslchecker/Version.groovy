@@ -1,5 +1,13 @@
 package com.bryanherbst.sslchecker
 
+/**
+ * Groovy object representing a version of OpenSSL
+ *
+ * OpenSSL versions are in the format "major.minor.revision[patch]", where major, minor, and revision
+ * are integers and [patch] is an optional alphabetical component.
+ *
+ * More information on OpenSSL versioning is available at https://www.openssl.org/docs/faq.html#MISC8
+ */
 class Version implements Comparable {
 
     def major;

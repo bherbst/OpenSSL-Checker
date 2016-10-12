@@ -13,17 +13,13 @@ import org.gradle.api.Project
  */
 class OpenSslCheckerPlugin implements Plugin<Project> {
     void apply(Project project) {
-
         if (project.plugins.hasPlugin('com.android.application')) {
-            applyAndroid(project, (DomainObjectCollection<BaseVariant>) project.android.applicationVariants);
-        } else if (project.plugins.hasPlugin('com.android.test')) {
             applyAndroid(project, (DomainObjectCollection<BaseVariant>) project.android.applicationVariants);
         } else if (project.plugins.hasPlugin('com.android.library')) {
             applyAndroid(project, (DomainObjectCollection<BaseVariant>) project.android.libraryVariants);
         } else {
-            throw new IllegalArgumentException('OpenSSL Checker plugin requires the Android plugin to be configured');
+            throw new UnsupportedOperationException('OpenSSL Checker plugin requires the Android plugin to be configured');
         }
-
     }
 
     private static void applyAndroid(Project project, DomainObjectCollection<BaseVariant> variants) {
@@ -42,7 +38,7 @@ class OpenSslCheckerPlugin implements Plugin<Project> {
         task.group = 'Verification'
         task.androidOutput = output
 
-        // Dexcount tasks require that assemble has been run...
+        // The APK/AAR needs to be assembled for us to inspect it.
         task.dependsOn(variant.assemble)
         task.mustRunAfter(variant.assemble)
     }

@@ -1,0 +1,17 @@
+language: groovy
+
+groovy:
+    - 2.3.6
+    - 2.3.9
+
+jdk:
+    - oraclejdk8
+
+install: true
+
+script: ./gradlew clean build
+
+cache:
+    directories:
+        - $HOME/.gradle
+        - $HOME/.m2

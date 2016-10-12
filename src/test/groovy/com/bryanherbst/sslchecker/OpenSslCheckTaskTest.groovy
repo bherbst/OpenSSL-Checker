@@ -9,7 +9,7 @@ class OpenSslCheckTaskTest extends GroovyTestCase {
         def checkTask = project.task('openSslCheck', type: OpenSslCheckTask)
 
         def line = "/Users/badssl/openssl-1.0.1m/badapk"
-        def (version, source) = checkTask.getOpenSSLVersionAndSource(line)
+        def (version, source) = checkTask.getOpenSslVersionAndSource(line)
 
         assertEquals "1.0.1m", version
         assertEquals "/Users/badssl", source
@@ -20,7 +20,7 @@ class OpenSslCheckTaskTest extends GroovyTestCase {
         def checkTask = project.task('openSslCheck', type: OpenSslCheckTask)
 
         def line = "Yay we found OpenSSL 1.0.1m! Look at that!"
-        def (version, source) = checkTask.getOpenSSLVersionAndSource(line)
+        def (version, source) = checkTask.getOpenSslVersionAndSource(line)
 
         assertEquals "1.0.1m", version
         assertEquals "unknown", source
@@ -31,7 +31,7 @@ class OpenSslCheckTaskTest extends GroovyTestCase {
         def checkTask = project.task('openSslCheck', type: OpenSslCheckTask)
 
         def line = "Nothing to see here"
-        def (version, source) = checkTask.getOpenSSLVersionAndSource(line)
+        def (version, source) = checkTask.getOpenSslVersionAndSource(line)
 
         assertEquals null, version
         assertEquals null, source
@@ -79,7 +79,7 @@ class OpenSslCheckTaskTest extends GroovyTestCase {
         def versions = ["1.0.0a" : ["unknown"] ]
 
         shouldFailWithCause(InsecureSslVersionException) {
-            checkTask.failOnSSLVulnerabilityFound(versions)
+            checkTask.failOnSslVulnerabilityFound(versions)
         }
     }
 }

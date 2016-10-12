@@ -12,18 +12,18 @@ class OpenSslCheckTask extends DefaultTask {
 
     def BaseVariantOutput androidOutput
 
-    def openSSLVersions = [:]
+    def openSslVersions = [:]
 
     /**
      * Check this project for vulnerable OpenSSL versions
      */
     @TaskAction
-    void checkSSL() {
+    void checkSsl() {
         def filename = androidOutput.outputFile.name
         if (filename.endsWith("apk") || filename.endsWith("aar")) {
-            findOpenSSLVersionsInFile(androidOutput.outputFile)
-            reportOpenSSLVersions(openSSLVersions)
-            failOnSSLVulnerabilityFound(openSSLVersions)
+            findOpenSslVersionsInFile(androidOutput.outputFile)
+            reportOpenSslVersions(openSslVersions)
+            failOnSslVulnerabilityFound(openSslVersions)
         } else {
             throw new TaskExecutionException(this, new IllegalArgumentException("Output file ${filename} is not an APK or AAR."))
         }
@@ -35,12 +35,12 @@ class OpenSslCheckTask extends DefaultTask {
      * @param file An APK or AAR file
      * @return
      */
-    def findOpenSSLVersionsInFile(File file) {
+    def findOpenSslVersionsInFile(File file) {
         def proc = ["sh", "-c", "unzip -p ${file.absolutePath} | strings | grep -i \"OpenSSL\""]
         def results = proc.execute().text
 
         results.eachLine { line ->
-            def (version, source) = getOpenSSLVersionAndSource(line);
+            def (version, source) = getOpenSslVersionAndSource(line);
 
             if (version != null) {
                 registerVersion(version, source)
@@ -55,7 +55,7 @@ class OpenSslCheckTask extends DefaultTask {
      *      if it could be determined. If the source could not be determined, returns [version, "unknown"].
      *      If OpenSSL was not found in the line, returns [null, null]
      */
-    def getOpenSSLVersionAndSource(String line) {
+    def getOpenSslVersionAndSource(String line) {
         def folderFinder = (line =~ /\/openssl-(\d+\.\d+\.\d+[a-z]+)\//)
         if (folderFinder.find()) {
             def version = folderFinder[0][1]
@@ -79,7 +79,7 @@ class OpenSslCheckTask extends DefaultTask {
      * @param source The source of the found version
      */
     def registerVersion(String version, String source) {
-        Set<String> sources = openSSLVersions.containsKey(version) ? openSSLVersions.get(version) : []
+        Set<String> sources = openSslVersions.containsKey(version) ? openSslVersions.get(version) : []
 
         if (source == "unknown") {
             if (sources.empty) {
@@ -96,7 +96,7 @@ class OpenSslCheckTask extends DefaultTask {
             sources.add(source)
         }
 
-        openSSLVersions.put(version, sources)
+        openSslVersions.put(version, sources)
     }
 
     /**
@@ -104,7 +104,7 @@ class OpenSslCheckTask extends DefaultTask {
      *
      * @param versionMap a map of found OpenSSL versions to their sources
      */
-    static def reportOpenSSLVersions(Map<String, Set<String>> versionMap) {
+    static def reportOpenSslVersions(Map<String, Set<String>> versionMap) {
         versionMap.each { version, sources ->
             println "Found OpenSSL version ${version} in:"
 
@@ -119,7 +119,7 @@ class OpenSslCheckTask extends DefaultTask {
      *
      * @param versionMap a map of found OpenSSL versions to their sources
      */
-    def failOnSSLVulnerabilityFound(Map<String, Set<String>> versionMap) {
+    def failOnSslVulnerabilityFound(Map<String, Set<String>> versionMap) {
         versionMap.each { version, sources ->
             if (isVersionVulnerable(version)) {
                 def message = "OpenSSL ${version} detected and contains known vulnerabilities";

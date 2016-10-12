@@ -21,12 +21,12 @@ version = VERSION_NAME
 
 buildscript {
     repositories {
-        maven { url "https://plugins.gradle.org/m2/" } // Mirrors jcenter() and mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 }
 
 repositories {
-    maven { url "https://plugins.gradle.org/m2/" } // Mirrors jcenter() and mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
 }
 
 dependencies {

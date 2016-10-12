@@ -1,11 +1,13 @@
 # OpenSSL Vulnerabilty Checker
+[![Build Status](https://travis-ci.org/bherbst/OpenSSL-Checker.svg?branch=master)](https://travis-ci.org/bherbst/OpenSSL-Checker)
 
 A Gradle plugin for checking whether an .apk or an .aar contains OpenSSL
 versions with known vulnerabilities.
 
 Google automatically scans the APKs you upload to the Play Store for versions
-of OpenSSL that contain known vulnerabilities. You can find more information on
-addressing these vulnerabilities in your application [here](https://support.google.com/faqs/answer/6376725).
+of OpenSSL that contain known vulnerabilities. If it detects a vulnerable OpenSSL version, your app
+will be rejected. You can find more information on addressing these vulnerabilities in your
+application [here](https://support.google.com/faqs/answer/6376725).
 
 ## Usage
 

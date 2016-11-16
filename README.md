@@ -19,7 +19,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.bryanherbst.openssl-checker:openssl-checker:0.1.1'
+        classpath 'com.bryanherbst.openssl-checker:openssl-checker:1.0.0'
     }
 }
 ```

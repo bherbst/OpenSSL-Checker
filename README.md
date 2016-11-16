@@ -19,7 +19,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.bryanherbst.openssl-checker:openssl-checker:0.1.1'
+        classpath 'com.bryanherbst.openssl-checker:openssl-checker:1.0.0'
     }
 }
 ```
@@ -41,7 +41,7 @@ Windows are welcome!
 ## Sample output
 ```
 Found OpenSSL version 1.0.0m in:
-        - /Users/username/bad-library
+        - /Users/username/bad-library/openssl-1.0.0m
 :app:checkDebugOpenSsl FAILED
 
 FAILURE: Build failed with an exception.
@@ -50,6 +50,22 @@ FAILURE: Build failed with an exception.
 Execution failed for task ':app:checkDebugOpenSSL'.
 > OpenSSL 1.0.0m detected and contains known vulnerabilities
 ```
+
+## Source attribution
+When possible, this plugin will attempt to tell you where a vulnerable Open SSL version came from.
+This relies on the fact that when someone builds Open SSL, the path at which they built it is often
+left in the built .so files.
+
+For example, if you see this:
+```
+Found OpenSSL version 1.0.0m in:
+        - /Users/username/bad-library/openssl-1.0.0m
+```
+
+You can assume pretty reasonably that "bad-library" is to blame for the bad version of Open SSL.
+
+If the source is "unknown," we couldn't find a file path that looked like an Open SSL file path, so
+we couldn't make any recommendations as to who might be at fault.
 
 ## Vulnerabilities detected
 

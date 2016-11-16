@@ -1,1 +1,1 @@
-include ':openssl-checker', ':openssl-lib-1.0.1c', ':app-test'
+include ':openssl-checker', ':openssl-lib-1.0.1c', ':app-test', ':lib-test'

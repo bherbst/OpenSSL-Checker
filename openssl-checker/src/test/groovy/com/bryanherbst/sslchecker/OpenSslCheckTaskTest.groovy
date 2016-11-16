@@ -12,7 +12,7 @@ class OpenSslCheckTaskTest extends GroovyTestCase {
         def (version, source) = checkTask.getOpenSslVersionAndSource(line)
 
         assertEquals "1.0.1m", version
-        assertEquals "/Users/badssl", source
+        assertEquals "/Users/badssl/openssl-1.0.1m", source
     }
 
     void testParseUnkownLine() {

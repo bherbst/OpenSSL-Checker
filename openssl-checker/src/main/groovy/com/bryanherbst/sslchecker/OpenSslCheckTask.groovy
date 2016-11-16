@@ -56,13 +56,15 @@ class OpenSslCheckTask extends DefaultTask {
      *      If OpenSSL was not found in the line, returns [null, null]
      */
     def getOpenSslVersionAndSource(String line) {
-        def folderFinder = (line =~ /\/openssl-(\d+\.\d+\.\d+[a-z]+)\//)
+        // First try to see if we can find a file path containing a version. That is the likely source.
+        def folderFinder = (line =~ /\/.*(\d+\.\d+\.\d+[a-z]+)/)
         if (folderFinder.find()) {
             def version = folderFinder[0][1]
-            def source = line.substring(0, folderFinder.start())
+            def source = line.substring(0, folderFinder.end())
             return [version, source]
         }
 
+        // This format is common to all OpenSSL versions
         def unknownSourceFinder = (line =~ /OpenSSL (\d+\.\d+\.\d+[a-z]+)/)
         if (unknownSourceFinder.find()) {
             def version = unknownSourceFinder[0][1]

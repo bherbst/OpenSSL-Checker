@@ -1,4 +1,4 @@
-if (getProperty('pluginOnly')) {
+if (hasProperty('pluginOnly') && getProperty('pluginOnly')) {
     // This allows the CI environment to build just the plugin instead of worrying about the Android
     // modules
     include ':openssl-checker'

@@ -1,1 +1,7 @@
-include ':openssl-checker', ':openssl-lib-1.0.1c', ':app-test', ':lib-test'
+if (getProperty('pluginOnly')) {
+    // This allows the CI environment to build just the plugin instead of worrying about the Android
+    // modules
+    include ':openssl-checker'
+} else {
+    include ':openssl-checker', ':openssl-lib-1.0.1c', ':app-test', ':lib-test'
+}

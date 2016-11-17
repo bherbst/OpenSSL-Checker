@@ -11,7 +11,7 @@ install: true
 
 script: ./gradlew -PpluginOnly=true clean build
 
-after_success: ./gradlew jacocoTestReport coveralls
+after_success: ./gradlew -PpluginOnly jacocoTestReport coveralls
 
 cache:
     directories:

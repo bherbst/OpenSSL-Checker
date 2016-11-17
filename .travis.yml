@@ -11,6 +11,8 @@ install: true
 
 script: ./gradlew -PpluginOnly=true clean build
 
+after_success: ./gradlew jacocoTestReport coveralls
+
 cache:
     directories:
         - $HOME/.gradle

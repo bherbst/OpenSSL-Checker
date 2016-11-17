@@ -15,6 +15,8 @@
  */
 apply plugin: 'groovy'
 apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 
 group = GROUP
 version = VERSION_NAME
@@ -31,6 +33,17 @@ jar {
         attributes(
                 'Implementation-Title': POM_ARTIFACT_ID,
                 'Implementation-Version': VERSION_NAME)
+    }
+}
+
+jacoco {
+    toolVersion = "0.7.7.201606060606"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
     }
 }
 

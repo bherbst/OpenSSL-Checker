@@ -1,5 +1,6 @@
 # OpenSSL Vulnerabilty Checker
 [![Build Status](https://travis-ci.org/bherbst/OpenSSL-Checker.svg?branch=master)](https://travis-ci.org/bherbst/OpenSSL-Checker)
+[![Coverage Status](https://coveralls.io/repos/github/bherbst/OpenSSL-Checker/badge.svg?branch=master)](https://coveralls.io/github/bherbst/OpenSSL-Checker?branch=master)
 
 A Gradle plugin for checking whether an .apk or an .aar contains OpenSSL
 versions with known vulnerabilities.

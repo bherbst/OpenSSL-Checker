@@ -9,7 +9,7 @@ jdk:
 
 install: true
 
-script: ./gradlew clean openssl-checker:build
+script: ./gradlew openssl-checker:clean openssl-checker:build
 
 cache:
     directories:

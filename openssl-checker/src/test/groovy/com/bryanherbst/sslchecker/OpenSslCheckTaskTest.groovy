@@ -1,8 +1,30 @@
 package com.bryanherbst.sslchecker
 
+import com.android.build.gradle.api.BaseVariantOutput
 import org.gradle.testfixtures.ProjectBuilder
 
+import static org.mockito.Mockito.mock
+import static org.mockito.Mockito.when
+
 class OpenSslCheckTaskTest extends GroovyTestCase {
+
+    void testTaskFailsWhenNotApkOrAar() {
+        def project = ProjectBuilder.builder().build()
+        def task = project.task('checkSsl', type: OpenSslCheckTask)
+
+        def file = mock(File.class)
+        when(file.getName()).thenReturn("foo.bar")
+
+        def output = mock(BaseVariantOutput.class)
+        when(output.getOutputFile()).thenReturn(file)
+
+
+        task.androidOutput = output
+
+        shouldFailWithCause(IllegalArgumentException) {
+            task.checkSsl()
+        }
+    }
 
     void testParseFileLine() {
         def project = ProjectBuilder.builder().build()
@@ -81,5 +103,53 @@ class OpenSslCheckTaskTest extends GroovyTestCase {
         shouldFailWithCause(InsecureSslVersionException) {
             checkTask.failOnSslVulnerabilityFound(versions)
         }
+    }
+
+    void testRegisterUnknownFirst() {
+        def project = ProjectBuilder.builder().build()
+        def task = project.task('openSslCheck', type: OpenSslCheckTask)
+
+        task.registerVersion("1.0.1r", "unknown")
+        def sources = task.openSslVersions.get("1.0.1r")
+
+        assert sources.size() == 1
+        assert sources.contains("unknown")
+    }
+
+    void testRealSourceReplacesUnknown() {
+        def project = ProjectBuilder.builder().build()
+        def task = project.task('openSslCheck', type: OpenSslCheckTask)
+
+        task.registerVersion("1.0.1r", "unknown")
+        task.registerVersion("1.0.1r", "real_source")
+        def sources = task.openSslVersions.get("1.0.1r")
+
+        assert sources.size() == 1
+        assert sources.contains("real_source")
+    }
+
+    void testUnknownDoesNotReplaceRealSource() {
+        def project = ProjectBuilder.builder().build()
+        def task = project.task('openSslCheck', type: OpenSslCheckTask)
+
+        task.registerVersion("1.0.1r", "real_source")
+        task.registerVersion("1.0.1r", "unknown")
+        def sources = task.openSslVersions.get("1.0.1r")
+
+        assert sources.size() == 1
+        assert sources.contains("real_source")
+    }
+
+    void testMultipleRealSources() {
+        def project = ProjectBuilder.builder().build()
+        def task = project.task('openSslCheck', type: OpenSslCheckTask)
+
+        task.registerVersion("1.0.1r", "real_source")
+        task.registerVersion("1.0.1r", "other_real_source")
+        def sources = task.openSslVersions.get("1.0.1r")
+
+        assert sources.size() == 2
+        assert sources.contains("real_source")
+        assert sources.contains("other_real_source")
     }
 }
